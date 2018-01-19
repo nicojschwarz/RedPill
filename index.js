@@ -10,6 +10,7 @@ var i2c = null;
 var btnPin = null;
 raspi.init(() => {
     i2c = new I2C();
+    i2cWrite("on");
     //btnPin = new DigInput();
 });
 
@@ -45,6 +46,6 @@ function parseCmd(cmd) {
     return result;
 }
 
-i2cWrite("on");
+
 
 //btnPin.read();  
