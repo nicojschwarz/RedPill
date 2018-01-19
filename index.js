@@ -24,6 +24,7 @@ function i2cWrite(cmd) {
     if (typeof cmd !== "number" || cmd < 1 || cmd > 7)
         throw "I2C invalid command";
 
+    console.log("sending " + cmd);
     if (i2c != null)
         i2c.writeByte(69, cmd);
 }
