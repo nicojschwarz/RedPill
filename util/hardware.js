@@ -17,7 +17,7 @@ raspi.init(() => {
 /**
  * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"|number} cmd 
  */
-export function i2cWrite(cmd) {
+function i2cWrite(cmd) {
     if (typeof cmd === "string")
         cmd = parseCmd(cmd);
     if (typeof cmd !== "number" || cmd < 1 || cmd > 7)
@@ -46,5 +46,7 @@ function parseCmd(cmd) {
 }
 
 
+var exports = module.exports = {};
+exports.i2cWrite = i2cWrite;
 
 //btnPin.read();  
