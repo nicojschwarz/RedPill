@@ -1,5 +1,3 @@
-import { setTimeout } from 'timers';
-
 "use strict"
 
 const hw = require('./util/hardware')
