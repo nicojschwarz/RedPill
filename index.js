@@ -10,7 +10,7 @@ var i2c = null;
 var btnPin = null;
 raspi.init(() => {
     i2c = new I2C();
-    btnPin = new DigInput();
+    //btnPin = new DigInput();
 });
 
 
