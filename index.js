@@ -18,9 +18,9 @@ raspi.init(() => {
  * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"|number} cmd 
  */
 function i2cWrite(cmd) {
-    if (type(cmd) === "string")
+    if (typeof cmd === "string")
         cmd = parseCmd(cmd);
-    if (type(cmd) !== "number" || cmd < 1 || cmd > 7)
+    if (typeof cmd !== "number" || cmd < 1 || cmd > 7)
         throw "I2C invalid command";
 
     if (i2c != null)
