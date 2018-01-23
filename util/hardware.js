@@ -8,11 +8,11 @@ const DigInput = require('raspi-gpio').DigitalInput;
 var i2c = null;
 /** @type {DigInput} */
 var btnPin = null;
-raspi.init(() => {
+
+raspi.init(function () {
     i2c = new I2C();
     //btnPin = new DigInput();
 });
-
 
 /**
  * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"|number} cmd 
