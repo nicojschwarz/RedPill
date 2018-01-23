@@ -22,16 +22,16 @@ alarmRouter.get("/", (req, res, next) => {
 alarmRouter.post("/", (req, res, next) => {
 
     if (typeof req.body.time === 'string') {
-        const t = parseInt(req.data.time);
+        const t = parseInt(req.body.time);
         if (t >= 0 && t < 3600)
             alarm.time = t;
     }
     if (typeof req.body.active === 'string')
         alarm.active = req.body.active !== "false";
-    if (typeof req.data.colorReset === 'string')
-        alarm.colorReset = req.data.colorReset;
-    if (typeof req.data.colorFade === 'string')
-        alarm.colorFade = req.data.colorFade;
+    if (typeof req.body.colorReset === 'string')
+        alarm.colorReset = req.body.colorReset;
+    if (typeof req.body.colorFade === 'string')
+        alarm.colorFade = req.body.colorFade;
 
     res.send("success");
     console.log(alarm);
