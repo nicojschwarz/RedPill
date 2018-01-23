@@ -11,6 +11,8 @@ app.use(bodyParser.json());
 
 const alarmRouter = express.Router();
 
+var alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' }
+
 alarmRouter.get("/", (req, res, next) => {
     try {
         hw.i2cWrite(req.params.cmd);
@@ -18,32 +20,21 @@ alarmRouter.get("/", (req, res, next) => {
     } catch (err) { next(err); }
 });
 alarmRouter.post("/", (req, res, next) => {
-    if (typeof req.data.time === 'string') {
+
+    if (typeof req.body.time === 'string') {
         const t = parseInt(req.data.time);
         if (t >= 0 && t < 3600)
-            save(t);
+            alarm.time = t;
     }
-    if (typeof req.data.enabled !== 'undefined') {
-        if (req.data.enabled && req.data.enabled !== 'false')
-            save(true);
-        else
-            save(false);
-    }
-    if (typeof req.data.colorReset !== 'undefined') {
-        if (req.data.enabled && req.data.enabled !== 'false')
-            save(true);
-        else
-            save(false);
-    }
-    if (typeof req.data.colorFade !== 'undefined') {
-        if (req.data.enabled && req.data.enabled !== 'false')
-            save(true);
-        else
-            save(false);
-    }
-    colorReset: "white",
-        spotifyPlaylistURL: ""
+    if (typeof req.body.active === 'string')
+        alarm.active = req.body.active !== "false";
+    if (typeof req.data.colorReset === 'string')
+        alarm.colorReset = req.data.colorReset;
+    if (typeof req.data.colorFade === 'string')
+        alarm.colorFade = req.data.colorFade;
+
     res.send("success");
+    console.log(alarm);
 });
 
 const ledRouter = express.Router();
