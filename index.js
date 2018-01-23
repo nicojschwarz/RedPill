@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const alarmRouter = express.Router();
 
 alarmRouter.post("/", (req, res, next) => {
-    console.log(req.data);
+    console.log(req.body);
     res.send("success");
 });
 
