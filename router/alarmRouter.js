@@ -24,3 +24,5 @@ alarmRouter.post("/", (req, res, next) => {
     res.send("success");
     console.log(alarm);
 });
+
+exports = module.exports = alarmRouter;

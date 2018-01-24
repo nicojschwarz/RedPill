@@ -12,5 +12,6 @@ app.use(fileUpload());
 
 app.use("/led", require('./router/ledRouter'));
 app.use("/alarm", require('./router/alarmRouter'));
+app.use("/sound", require('./router/soundRouter'));
 
 app.listen(80);
