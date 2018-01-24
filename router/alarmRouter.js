@@ -1,9 +1,15 @@
 const hw = require('../util/hardware');
+const schedule = require('../util/schedule');
 const express = require('express');
 
 const alarmRouter = express.Router();
 
 var alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' }
+
+schedule.callback = () => {
+    if (alarm.active)
+        console.log("Ring Ring");
+}
 
 alarmRouter.get("/", (req, res, next) => {
     /*var now = new Date(),
@@ -23,6 +29,7 @@ alarmRouter.post("/", (req, res, next) => {
         const t = parseInt(req.body.time);
         if (t >= 0 && t < 3600)
             alarm.time = t;
+        schedule.setTime(alarm.time);
     }
     if (typeof req.body.active === 'string')
         alarm.active = req.body.active !== "false";
