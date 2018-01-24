@@ -1,11 +1,11 @@
 const { exec } = require('child_process');
 
-var hadError = false;
+var hadError = { err: false };
 
 function play() {
     exec('omxplayer wakeup.mp3').on('close', (code, signal) => {
         if (code !== 0)
-            hadError = true;
+            hadError.err = true;
         console.log(hadError);
     });
 }
