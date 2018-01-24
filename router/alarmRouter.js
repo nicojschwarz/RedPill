@@ -1,4 +1,4 @@
-const hw = require('./util/hardware');
+const hw = require('../util/hardware');
 const express = require('express');
 
 const alarmRouter = express.Router();
