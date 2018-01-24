@@ -1,7 +1,7 @@
 const schedule = require('node-schedule');
 
 class MySchedule {
-    job = schedule.scheduleJob("0 6 * * *", () => {
+    job = schedule.scheduleJob("0 6 * * *", function () {
         if (callback) callback();
     });
 
