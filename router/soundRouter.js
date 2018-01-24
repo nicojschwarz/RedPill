@@ -25,6 +25,7 @@ soundRouter.get("/play", (req, res, next) => {
 });
 
 soundRouter.get("/err", (req, res, next) => { 
+    console.log(sound);
     res.send(sound.hadError);
 });
 
