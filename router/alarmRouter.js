@@ -6,7 +6,7 @@ const alarmRouter = express.Router();
 var alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' }
 
 alarmRouter.get("/", (req, res, next) => {
-    var obj = { timePretty: Math.round(time / 60) + ':' + time % 60, ttl: 'err: 404' };
+    var obj = { timePretty: Math.round(alarm.time / 60) + ':' + alarm.time % 60, ttl: 'err: 404' };
     Object.assign(obj, alarm);
     res.send(obj);
 });
