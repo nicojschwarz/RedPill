@@ -2,25 +2,23 @@
 
 const hw = require('./util/hardware');
 const express = require('express');        // call express
-const bodyParser = require('body-parser');  // 
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 const app = express();                 // define our app using express
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 const alarmRouter = express.Router();
 
 var alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' }
 
 alarmRouter.get("/", (req, res, next) => {
-    try {
-        hw.i2cWrite(req.params.cmd);
-        res.send("success");
-    } catch (err) { next(err); }
+    res.send(alarm);
 });
 alarmRouter.post("/", (req, res, next) => {
-
     if (typeof req.body.time === 'string') {
         const t = parseInt(req.body.time);
         if (t >= 0 && t < 3600)
