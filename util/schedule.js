@@ -1,7 +1,15 @@
 const schedule = require('node-schedule');
 
-const job = schedule.scheduleJob("20 * * * *", ()=>{
-    console.log("Go");
-});
+class MySchedule {
+    job = schedule.scheduleJob("0 6 * * *", () => {
+        if (callback) callback();
+    });
 
-exports = module.exports = {};
+    callback = null;
+    setTime(time) {
+        job.reschedule(time % 60 + " " + Math.floor(time / 60) + " * * *")
+    }
+}
+
+
+exports = module.exports = new MySchedule();

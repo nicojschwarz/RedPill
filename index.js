@@ -3,7 +3,6 @@
 const express = require('express');        // call express
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const schedule = require('./util/schedule');
 
 const app = express();                 // define our app using express
 
