@@ -4,9 +4,10 @@ var hadError = false;
 
 function play() {
     exec('omxplayer wakeup.mp3').on('close', (code, signal) => {
+        console.log(alarm);
         if (code !== 0)
             hadError = true;
-    });    
+    });
 }
 
 exports = module.exports = {};
