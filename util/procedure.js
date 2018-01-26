@@ -26,7 +26,7 @@ class Procedure {
         if (n <= 0)
             cb2();
         else
-            this.interval = setInterval(this.onRingNext, ms, cb, n - 1, ms);
+            this.interval = setInterval(this.repeatNTime, ms, cb, n - 1, ms);
     }
 
     onRing() {
