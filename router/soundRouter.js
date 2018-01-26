@@ -7,10 +7,8 @@ const soundRouter = express.Router();
 soundRouter.post("/", (req, res, next) => {
     fs.writeFileSync("./wakeup.mp3", "");
     req.on('data', function (chunk) {
-        if (!fs.appendFileSync("./wakeup.mp3", chunk)) {
-            console.log("error uploading file");
-            res.send("error writing file");
-        }
+        var res = fs.appendFileSync("./wakeup.mp3", chunk)
+        console.log(res);
     });
     req.on("end", () => {
         res.send("success");
