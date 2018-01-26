@@ -2,15 +2,15 @@ const hw = require('../util/hardware');
 const schedule = require('../util/schedule');
 const express = require('express');
 
-const alarmRouter = express.Router();
 
 var alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' }
 
-schedule.callback = () => {
+schedule.setCallback(() => {
     if (alarm.active)
         console.log("Ring Ring");
-}
+});
 
+const alarmRouter = express.Router();
 alarmRouter.get("/", (req, res, next) => {
     /*var now = new Date(),
         then = new Date(
@@ -19,7 +19,7 @@ alarmRouter.get("/", (req, res, next) => {
             now.getDate(),
             0, 0, 0),
         diff = now.getTime() - then.getTime();
-    var alarmTTL =*/ 
+    var alarmTTL =*/
     var obj = { timePretty: Math.floor(alarm.time / 60) + ':' + alarm.time % 60, ttl: 'err: 404' };
     Object.assign(obj, alarm);
     res.send(obj);

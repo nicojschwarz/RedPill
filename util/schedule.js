@@ -1,13 +1,16 @@
 const schedule = require('node-schedule');
 
-job = schedule.scheduleJob("0 6 * * *", function () {
+var job = schedule.scheduleJob("0 6 * * *", function () {
     if (callback) callback();
 });
-callback = null;
+var callback = null;
 
 class MySchedule {
     setTime(time) {
         job.reschedule(time % 60 + " " + Math.floor(time / 60) + " * * *")
+    }
+    setCallback(cb) {
+        callback = cb;
     }
 }
 
