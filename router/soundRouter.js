@@ -8,7 +8,8 @@ soundRouter.post("/", (req, res, next) => {
     fs.writeFileSync("./wakeup.mp3", "");
     req.on('data', function (chunk) {
         var res = fs.appendFileSync("./wakeup.mp3", chunk)
-        console.log(res);
+        if (res)
+            console.log(res);
     });
     req.on("end", () => {
         res.send("success");
