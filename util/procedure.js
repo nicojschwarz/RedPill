@@ -21,6 +21,7 @@ class Procedure {
     }
 
     repeatNTime(cb, n, ms, cb2) {
+        console.log(n);
         cb();
         if (n <= 0)
             cb2();
