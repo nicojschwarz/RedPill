@@ -33,17 +33,17 @@ class Procedure {
         hw.i2cWrite(alarm.alarm.colorFade);
         this.onRingNext(() => {
             hw.i2cWrite("on");
-            this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => {
+            this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => {
                 console.log("done");
                 hw.i2cWrite(alarm.alarm.colorFade);
                 this.onRingNext(() => {
-                    this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
+                    this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
                         this.onRingNext(() => {
                             sound.play();
                         }, 300000);
                         this.onRingNext(() => {
                             hw.i2cWrite("on");
-                            this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite(alarm.alarm.colorReset); hw.i2cWrite("off"); });
+                            this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite(alarm.alarm.colorReset); hw.i2cWrite("off"); });
                         }, 3600000);
                     });
                 }, 128571)
