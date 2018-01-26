@@ -4,6 +4,7 @@ const sound = require('../util/sound');
 const soundRouter = express.Router();
 
 soundRouter.post("/", (req, res, next) => {
+    console.log(req.body);
     if (!req.files || !req.files.sound)
         return res.status(400).send('No files were uploaded.');
 
