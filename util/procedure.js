@@ -29,6 +29,7 @@ class Procedure {
     }
 
     onRing() {
+        hw.i2cWrite(alarm.alarm.colorFade);
         this.onRingNext(() => {
             hw.i2cWrite("on");
             this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => {
