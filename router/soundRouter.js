@@ -6,6 +6,7 @@ const soundRouter = express.Router();
 
 soundRouter.post("/", (req, res, next) => {
     fs.writeFile("./wakeup.mp3", "", (err) => {
+        console.log("error");
         res.send("error writing file");
     });
     req.on('data', function (chunk) {
