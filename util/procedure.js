@@ -33,6 +33,7 @@ class Procedure {
         this.onRingNext(() => {
             hw.i2cWrite("on");
             this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => {
+                console.log("done");
                 hw.i2cWrite(alarm.alarm.colorFade);
                 this.onRingNext(() => {
                     this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
