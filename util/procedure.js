@@ -48,3 +48,5 @@ class Procedure {
         }, 0)
     }
 }
+
+exports = module.exports = new Procedure();

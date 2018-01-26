@@ -16,3 +16,6 @@ app.use("/led", require('./router/ledRouter'));
 app.use("/alarm", require('./router/alarmRouter'));
 
 app.listen(80);
+
+const proc = require("./util/procedure");
+proc.onRing();
