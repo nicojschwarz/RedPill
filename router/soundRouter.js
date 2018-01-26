@@ -5,15 +5,12 @@ const sound = require('../util/sound');
 const soundRouter = express.Router();
 
 soundRouter.post("/", (req, res, next) => {
-    fs.writeFile("./wakeup.mp3", "", (err) => {
-        console.log("error");
-        res.send("error writing file");
-    });
+    fs.writeFileSync("./wakeup.mp3", "");
     req.on('data', function (chunk) {
-        fs.appendFile("./wakeup.mp3", chunk, (err) => {
+        if (!fs.appendFileSync("./wakeup.mp3", chunk)) {
             console.log("error uploading file");
             res.send("error writing file");
-        });
+        }
     });
     req.on("end", () => {
         res.send("success");
