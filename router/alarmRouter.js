@@ -11,6 +11,8 @@ schedule.setCallback(() => {
 });
 
 const alarmRouter = express.Router();
+alarmRouter.alarm = alarm;  
+
 alarmRouter.get("/", (req, res, next) => {
     /*var now = new Date(),
         then = new Date(

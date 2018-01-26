@@ -1,5 +1,7 @@
 var { setInterval } = require("timers");
-
+var alarm = require("../router/alarmRouter");
+var sound = require("./sound");
+var hw = require("./hardware");
 
 /* - OnRing:
  *   - lights on; completly dim lights; set to fadeColor
@@ -12,14 +14,37 @@ var { setInterval } = require("timers");
 
 class Procedure {
     constructor() {
-        this.onRingInterval = null;
-        this.onBtnInterval = null;
+        this.interval = null;
     }
     onRingNext(cb, ms) {
-        this.onRingInterval = setInterval(cb, ms);
+        this.interval = setInterval(cb, ms);
+    }
+
+    repeatNTime(cb, n, ms, cb2) {
+        cb();
+        if (n <= 0)
+            cb2();
+        else
+            this.interval = setInterval(repeatNTime, ms, cb, n - 1, ms);
     }
 
     onRing() {
-        onRingNext(() => { })
+        onRingNext(() => {
+            hw.i2cWrite("on");
+            repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => {
+                hw.i2cWrite(alarm.alarm.colorFade);
+                onRingNext(() => {
+                    repeatNTime(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
+                        onRingNext(() => {
+                            sound.play();
+                        }, 300000);
+                        onRingNext(() => {
+                            hw.i2cWrite("on");
+                            repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite(alarm.alarm.colorReset); hw.i2cWrite("off"); });
+                        }, 3600000);
+                    });
+                }, 128571)
+            });
+        }, 0)
     }
 }
