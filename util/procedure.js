@@ -25,22 +25,22 @@ class Procedure {
         if (n <= 0)
             cb2();
         else
-            this.interval = setInterval(repeatNTime, ms, cb, n - 1, ms);
+            this.interval = setInterval(this.onRingNext, ms, cb, n - 1, ms);
     }
 
     onRing() {
-        onRingNext(() => {
+        this.onRingNext(() => {
             hw.i2cWrite("on");
-            repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => {
+            this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => {
                 hw.i2cWrite(alarm.alarm.colorFade);
-                onRingNext(() => {
-                    repeatNTime(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
-                        onRingNext(() => {
+                this.onRingNext(() => {
+                    this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
+                        this.onRingNext(() => {
                             sound.play();
                         }, 300000);
-                        onRingNext(() => {
+                        this.onRingNext(() => {
                             hw.i2cWrite("on");
-                            repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite(alarm.alarm.colorReset); hw.i2cWrite("off"); });
+                            this.onRingNext(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite(alarm.alarm.colorReset); hw.i2cWrite("off"); });
                         }, 3600000);
                     });
                 }, 128571)
