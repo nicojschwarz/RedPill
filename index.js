@@ -1,4 +1,4 @@
-import { setInterval } from 'timers';
+const { setInterval } = reequire('timers');
 
 "use strict"
 
