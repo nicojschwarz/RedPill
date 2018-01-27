@@ -71,6 +71,7 @@ alarmRouter.post("/", (req, res, next) => {
 
 alarmRouter.get("/abort", (req, res, next) => {
     procedure.cancle();
+    send("success");
 });
 
 exports = module.exports = alarmRouter;

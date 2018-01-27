@@ -85,7 +85,7 @@ function ring() {
     if (ringDelay)
         ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
-        //        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
+        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(getAlarm().colorFade); }, 750)
         .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
         .delay(() => {
