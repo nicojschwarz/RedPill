@@ -5,11 +5,10 @@ const fs = require("fs");
 
 var alarm;
 try {
-    alarm = require("alarm.json")
+    alarm = require("../alarm.json")
 } catch (err) {
     alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' };
 }
-
 function save() {
     fs.writeFile("alarm.json", JSON.stringify(alarm), "utf8", (err) => { if (err) console.log("alarm save err: " + err); });
 }
@@ -24,15 +23,10 @@ const alarmRouter = express.Router();
 alarmRouter.alarm = alarm;
 
 alarmRouter.get("/", (req, res, next) => {
-    var now = new Date(),
-        then = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            0, 0, 0),
-        timeInDay = Math.floor((now.getTime() - then.getTime()) / (1000 * 60)),
-        alarmTTLNeg = alarm.time - timeInDay,
-        alarmTTL = (alarmTTLNeg < 0) ? alarmTTLNeg + 1440 : alarmTTLNeg,
+    var d = new Date(),
+        timeInDay = d.getMinutes() + d.getHours * 60,
+        deltaTime = alarm.time - timeInDay,
+        alarmTTL = (deltaTime < 0) ? deltaTime + 1440 : deltaTime,
         timePretty = Math.floor(alarm.time / 60) + ':' + alarm.time % 60,
         ttl = Math.floor(alarm.time / 60) + 'h and ' + alarm.time % 60 + "min";
     res.send({
