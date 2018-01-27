@@ -5,6 +5,8 @@ const fs = require("fs");
 const procedure = require("../util/procedure");
 const sound = require("../util/sound");
 
+hw.init();
+
 var alarm;
 try {
     alarm = require("../alarm.json")
@@ -23,6 +25,7 @@ schedule.setCallback(() => {
         procedure.ring();
 });
 hw.setBtnCallback(() => {
+    console.log("button press recived");
     procedure.cancleSound();
     sound.stop();
 });

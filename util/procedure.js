@@ -115,6 +115,6 @@ exports = module.exports = {
     cancle: cancle,
     cancleSound: cancleSound,
     setGetAlarm: function (getAlarmFunc) {
-        getAlarm = getAlarmFunc;
+        getAlarm = getAlarmFunc;    
     }
 };

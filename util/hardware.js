@@ -49,15 +49,6 @@ function parseCmd(cmd) {
 }
 
 
-var lastVal = 2;
-setInterval(function () {
-    var val = btnPin.value;
-    if (lastVal === 0 &&
-        val === 1) {
-        btnCB();    
-    }
-    lastVal = val;
-}, 50);
 
 var btnCB = null;
 
@@ -65,4 +56,16 @@ var exports = module.exports = {};
 exports.i2cWrite = i2cWrite;
 exports.setBtnCallback = function (cb) {
     btnCB = cb;
+}
+exports.init = function () {
+    var lastVal = 2;
+    setInterval(function () {
+        var val = btnPin.value;
+        if (lastVal === 0 &&
+            val === 1) {
+            console.log("btn pressed; cb: " + btnCB);
+            btnCB();
+        }
+        lastVal = val;
+    }, 200);
 }
