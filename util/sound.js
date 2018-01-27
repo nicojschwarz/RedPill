@@ -17,6 +17,8 @@ exports = module.exports = {};
 exports.play = play;
 exports.hadError = hadError;
 exports.stop = function () {
-    if (proc)
-        proc.kill();
+    console.log("stopping sound");
+    if (proc) {
+        console.log(proc.kill());
+    }
 }
