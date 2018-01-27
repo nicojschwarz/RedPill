@@ -1,3 +1,5 @@
+import { debug } from 'util';
+
 const hw = require('../util/hardware');
 const schedule = require('../util/schedule');
 const express = require('express');
@@ -51,6 +53,7 @@ alarmRouter.post("/", (req, res, next) => {
         if (t >= 0 && t < 1440)
             alarm.time = t;
         schedule.setTime(alarm.time);
+        console.log(alarm.time);
     }
     if (typeof req.body.active === 'string')
         alarm.active = req.body.active !== "false";
