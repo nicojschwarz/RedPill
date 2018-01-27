@@ -22,4 +22,4 @@ app.listen(80);
 const proc = require("./util/procedure");
 proc.ring();
 
-setInterval(require("./util/hardware").testBtn, 100);
+setInterval(require("./util/hardware").testBtn, 50);

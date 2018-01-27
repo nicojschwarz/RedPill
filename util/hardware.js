@@ -11,7 +11,7 @@ var btnPin = null;
 
 raspi.init(function () {
     i2c = new I2C();
-    btnPin = new DigInput({ pin: 21, pullResistor: require("raspi-gpio").PULL_DOWN });
+    btnPin = new DigInput({ pin: 'GPIO18', pullResistor: require("raspi-gpio").PULL_DOWN });
 });
 
 
@@ -50,8 +50,14 @@ function parseCmd(cmd) {
 
 var exports = module.exports = {};
 exports.i2cWrite = i2cWrite;
+
+var lastVal = 2;
 exports.testBtn = function () {
-    console.log(btnPin.value);
+    var val = btnPin.value;
+    if (val !== btnPin.value) {
+        console.log(val);
+        lastVal = val;
+    }
 }
 
 //btnPin.read();  
