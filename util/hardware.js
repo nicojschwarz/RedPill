@@ -53,6 +53,7 @@ exports.i2cWrite = i2cWrite;
 
 var lastVal = 2;
 exports.testBtn = function () {
+    console.log(btnPin.value);
     var val = btnPin.value;
     if (val !== lastVal) {
         console.log(val);
