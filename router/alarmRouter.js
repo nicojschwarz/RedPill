@@ -64,4 +64,7 @@ alarmRouter.post("/", (req, res, next) => {
     console.log(alarm);
 });
 
-exports = module.exports = { router: alarmRouter, getAlarm: function () { return alarm; } };
+exports = module.exports = {
+    router: alarmRouter,
+    getAlarm: function () { return alarm; }
+};
