@@ -85,7 +85,7 @@ function ring() {
         ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
 //        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.getAlarm().colorFade); }, 750)
+        .delay(() => { hw.i2cWrite(getAlarm().colorFade); }, 750)
         .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
         .delay(() => {
             if (doSound)
@@ -93,7 +93,7 @@ function ring() {
         }, 750)
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.getAlarm().colorReset); }, 750)
+        .delay(() => { hw.i2cWrite(getAlarm().colorReset); }, 750)
         .delay(() => { hw.i2cWrite("off"); }, 750);
 }
 
