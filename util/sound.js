@@ -5,12 +5,15 @@ var hadError = { err: false };
 var proc = null;
 
 function play() {
-    proc = spawn('omxplayer wakeup.mp3').on('close', (code, signal) => {
+    console.log("playing");
+    proc = spawn('omxplayer', ['wakeup.mp3']);
+    proc.on('exit', (code, signal) => {
         if (code !== 0)
             hadError.err = true;
         console.log(hadError);
         proc = null;
     });
+    proc.stdout.on("data", console.log);
 }
 
 exports = module.exports = {};
@@ -19,6 +22,6 @@ exports.hadError = hadError;
 exports.stop = function () {
     console.log("stopping sound; proc: " + proc);
     if (proc) {
-        console.log(proc.kill());
+        console.log(proc.stdin.write("^C"));
     }
 }
