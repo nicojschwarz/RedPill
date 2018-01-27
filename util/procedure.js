@@ -105,7 +105,7 @@ function cancle() {
 }
 
 function cancleSound() {
-    doSound = true;
+    doSound = false;
 }
 
 
