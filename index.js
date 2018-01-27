@@ -1,4 +1,4 @@
-const { setInterval } = reequire('timers');
+const { setInterval } = require('timers');
 
 "use strict"
 
