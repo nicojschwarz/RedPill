@@ -60,14 +60,10 @@ function delay(fn, t) {
 }
 
 
-var d = delay(() => { console.log("1"); }, 500)
-    .delay(() => { console.log("2"); }, 700)
-    .delay(() => { console.log("3"); }, 600)
-    .repeat(() => { console.log("4"); }, 1000, 5);
-
-
 var ringDelay;
 function ring() {
+    if (ringDelay)
+        ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
@@ -82,6 +78,7 @@ function ring() {
 function cancle() {
     if (ringDelay)
         ringDelay.cancel();
+    ringDelay = null;
 }
 
 
