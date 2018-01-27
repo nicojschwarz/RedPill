@@ -1,19 +1,15 @@
 const { spawn } = require('child_process');
+const Sound = require('node-aplay');
 
 var hadError = { err: false };
 
-var proc = null;
+/** @type {Sound} */
+var sound = null;
 
 function play() {
     console.log("playing");
-    proc = spawn('omxplayer', ['wakeup.mp3']);
-    proc.on('exit', (code, signal) => {
-        if (code !== 0)
-            hadError.err = true;
-        console.log(hadError);
-        proc = null;
-    });
-    proc.stdout.on("data", console.log);
+    sound = new Sound("wakeup.wav");
+    sound.play();
 }
 
 exports = module.exports = {};
@@ -21,7 +17,8 @@ exports.play = play;
 exports.hadError = hadError;
 exports.stop = function () {
     console.log("stopping sound; proc: " + proc);
-    if (proc) {
-        console.log(proc.stdin.write("^C"));
+    if (sound) {
+        sound.stop();
+        sound = null;
     }
 }

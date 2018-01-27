@@ -7,9 +7,9 @@ const soundRouter = express.Router();
 
 
 soundRouter.post("/", (req, res, next) => {
-    fs.writeFileSync("./wakeup.mp3", "");
+    fs.writeFileSync("./wakeup.wav", "");
     req.on('data', function (chunk) {
-        var res = fs.appendFileSync("./wakeup.mp3", chunk)
+        var res = fs.appendFileSync("./wakeup.wav", chunk)
         if (res)
             console.log(res);
     });
