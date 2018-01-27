@@ -92,7 +92,7 @@ function ring() {
             if (doSound)
                 sound.play();
         }, 750)
-        .delay(() => { hw.i2cWrite("on"); }, 3600000)
+        .delay(() => { hw.i2cWrite("on"); }, 10000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(getAlarm().colorReset); }, 750)
         .delay(() => { hw.i2cWrite("off"); }, 750);
