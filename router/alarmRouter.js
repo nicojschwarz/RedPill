@@ -27,7 +27,6 @@ hw.setBtnCallback(() => {
 });
 
 const alarmRouter = express.Router();
-alarmRouter.alarm = alarm;
 
 alarmRouter.get("/", (req, res, next) => {
     var d = new Date(),
@@ -65,4 +64,4 @@ alarmRouter.post("/", (req, res, next) => {
     console.log(alarm);
 });
 
-exports = module.exports = alarmRouter;
+exports = module.exports = { router: alarmRouter, getAlarm: function () { return alarm; } };

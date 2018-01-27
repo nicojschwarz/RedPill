@@ -13,6 +13,6 @@ app.use(bodyParser.json());
 
 
 app.use("/led", require('./router/ledRouter'));
-app.use("/alarm", require('./router/alarmRouter'));
+app.use("/alarm", require('./router/alarmRouter').router);
 
 app.listen(80);

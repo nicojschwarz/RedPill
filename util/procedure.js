@@ -1,5 +1,5 @@
 var { setInterval } = require("timers");
-var alarm = require("../router/alarmRouter");
+var getAlarm = require("../router/alarmRouter").getAlarm;
 var sound = require("./sound");
 var hw = require("./hardware");
 
@@ -85,7 +85,7 @@ function ring() {
         ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
 //        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
+        .delay(() => { hw.i2cWrite(alarm.getAlarm().colorFade); }, 750)
         .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
         .delay(() => {
             if (doSound)
@@ -93,7 +93,7 @@ function ring() {
         }, 750)
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.alarm.colorReset); }, 750)
+        .delay(() => { hw.i2cWrite(alarm.getAlarm().colorReset); }, 750)
         .delay(() => { hw.i2cWrite("off"); }, 750);
 }
 
