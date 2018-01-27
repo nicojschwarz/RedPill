@@ -6,6 +6,8 @@ var sound = null;
 
 function play() {
     console.log("playing");
+    if(sound)
+        sound.stop();
     sound = new Sound("wakeup.wav");
     sound.play();
 }

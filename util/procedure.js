@@ -63,23 +63,6 @@ function delay(fn, t) {
 
 var doSound = true;
 var ringDelay;
-/*function ring() {
-    doSound = true;
-    if (ringDelay)
-        ringDelay.cancel();
-    ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
-        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
-        .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
-        .delay(() => {
-            if (doSound)
-                sound.play();
-        }, 300000)
-        .delay(() => { hw.i2cWrite("on"); }, 3600000)
-        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-        .delay(() => { hw.i2cWrite(alarm.alarm.colorReset); }, 750)
-        .delay(() => { hw.i2cWrite("off"); }, 750);
-}*/
 function ring() {
     doSound = true;
     if (ringDelay)
@@ -87,12 +70,12 @@ function ring() {
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(getAlarm().colorFade); }, 750)
-        .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
-        .delay(() => {
+        .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
+        .delay(() => { //(750*8+128571*7+300000)/(1000*60) = ca 20.1min until startup of sound
             if (doSound)
                 sound.play();
-        }, 750)
-        .delay(() => { hw.i2cWrite("on"); }, 10000)
+        }, 300000)
+        .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(getAlarm().colorReset); }, 750)
         .delay(() => { hw.i2cWrite("off"); }, 750);
