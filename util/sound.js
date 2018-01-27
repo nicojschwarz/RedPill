@@ -2,14 +2,21 @@ const { exec } = require('child_process');
 
 var hadError = { err: false };
 
+var proc = null;
+
 function play() {
-    exec('omxplayer wakeup.mp3').on('close', (code, signal) => {
+    proc = exec('omxplayer wakeup.mp3').on('close', (code, signal) => {
         if (code !== 0)
             hadError.err = true;
         console.log(hadError);
+        proc = null;
     });
 }
 
 exports = module.exports = {};
 exports.play = play;
 exports.hadError = hadError;
+exports.stop = function () {
+    if (proc)
+        proc.kill();
+}

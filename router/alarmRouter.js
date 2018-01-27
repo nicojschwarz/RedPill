@@ -2,6 +2,8 @@ const hw = require('../util/hardware');
 const schedule = require('../util/schedule');
 const express = require('express');
 const fs = require("fs");
+const procedure = require("../util/procedure");
+const sound = require("../util/sound");
 
 var alarm;
 try {
@@ -16,7 +18,11 @@ function save() {
 
 schedule.setCallback(() => {
     if (alarm.active)
-        console.log("Ring Ring");
+        procedure.ring();
+});
+hw.setBtnCallback(() => {
+    procedure.cancleSound();
+    sound.stop();
 });
 
 const alarmRouter = express.Router();
@@ -30,7 +36,7 @@ alarmRouter.get("/", (req, res, next) => {
         ttl = Math.floor(alarmTTL / 60) + 'h and ' + alarmTTL % 60 + "min",
         timePretty = Math.floor(alarm.time / 60) + ':' + alarm.time % 60;
     res.send({
-            time: alarm.time,
+        time: alarm.time,
         active: alarm.active,
         colorFade: alarm.colorFade,
         colorReset: alarm.colorReset,

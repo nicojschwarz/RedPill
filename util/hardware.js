@@ -1,5 +1,6 @@
 "use strict"
 
+const { setInterval } = require('timers');
 const raspi = require('raspi');
 const I2C = require('raspi-i2c').I2C;
 const DigInput = require('raspi-gpio').DigitalInput;
@@ -48,16 +49,20 @@ function parseCmd(cmd) {
 }
 
 
+var lastVal = 2;
+setInterval(function () {
+    var val = btnPin.value;
+    if (lastVal === 0 &&
+        val === 1) {
+        btnCB();    
+    }
+    lastVal = val;
+}, 50);
+
+var btnCB = null;
+
 var exports = module.exports = {};
 exports.i2cWrite = i2cWrite;
-
-var lastVal = 2;
-exports.testBtn = function () {
-    var val = btnPin.value;
-    if (val !== lastVal) {
-        console.log(val);
-        lastVal = val;
-    }
+exports.setBtnCallback = function (cb) {
+    btnCB = cb;
 }
-
-//btnPin.read();  

@@ -60,15 +60,20 @@ function delay(fn, t) {
 }
 
 
+var doSound = true;
 var ringDelay;
 function ring() {
+    doSound = true;
     if (ringDelay)
         ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
         .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
-        .delay(() => { sound.play(); }, 300000)
+        .delay(() => {
+            if (doSound)
+                sound.play();
+        }, 300000)
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(alarm.alarm.colorReset); }, 750)
@@ -81,5 +86,8 @@ function cancle() {
     ringDelay = null;
 }
 
+function cancleSound() {
+    doSound = true;
+}
 
-exports = module.exports = { ring: ring, cancle: cancle };
+exports = module.exports = { ring: ring, cancle: cancle, cancleSound: cancleSound };

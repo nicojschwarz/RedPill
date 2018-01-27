@@ -1,5 +1,3 @@
-const { setInterval } = require('timers');
-
 "use strict"
 
 const express = require('express');        // call express
@@ -18,8 +16,3 @@ app.use("/led", require('./router/ledRouter'));
 app.use("/alarm", require('./router/alarmRouter'));
 
 app.listen(80);
-
-const proc = require("./util/procedure");
-proc.ring();
-
-setInterval(require("./util/hardware").testBtn, 50);
