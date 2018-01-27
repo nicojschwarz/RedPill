@@ -1,5 +1,5 @@
 var { setInterval } = require("timers");
-var getAlarm = require("../router/alarmRouter").getAlarm;
+var getAlarm = require("../router/alarmRouter");
 console.log(getAlarm);
 var sound = require("./sound");
 var hw = require("./hardware");
