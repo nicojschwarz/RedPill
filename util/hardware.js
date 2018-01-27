@@ -11,7 +11,7 @@ var btnPin = null;
 
 raspi.init(function () {
     i2c = new I2C();
-    btnPin = new DigInput({ pin: 21 });
+    btnPin = new DigInput({ pin: 21, pullResistor: require("raspi-gpio").PULL_UP });
 });
 
 
