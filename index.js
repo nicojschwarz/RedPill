@@ -11,9 +11,7 @@ app.use("/sound", require('./router/soundRouter'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-console.log(require('./router/alarmRouter'));
-
 app.use("/led", require('./router/ledRouter'));
-app.use("/alarm", require('./router/alarmRouter').router);
+app.use("/alarm", require('./router/alarmRouter'));
 
 app.listen(80);

@@ -14,6 +14,7 @@ try {
 function save() {
     fs.writeFile("alarm.json", JSON.stringify(alarm), "utf8", (err) => { if (err) console.log("alarm save err: " + err); });
 }
+procedure.setGetAlarm(() => { return alarm; })
 
 
 schedule.setCallback(() => {
@@ -64,7 +65,4 @@ alarmRouter.post("/", (req, res, next) => {
     console.log(alarm);
 });
 
-exports = module.exports = {
-    router: alarmRouter,
-    getAlarm: function () { return alarm; }
-};
+exports = module.exports = alarmRouter;

@@ -1,8 +1,8 @@
 var { setInterval } = require("timers");
-var getAlarm = require("../router/alarmRouter");
-console.log(getAlarm);
 var sound = require("./sound");
 var hw = require("./hardware");
+
+var getAlarm;
 
 /* - OnRing:
  *   - lights on; completly dim lights; set to fadeColor
@@ -85,7 +85,7 @@ function ring() {
     if (ringDelay)
         ringDelay.cancel();
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
-//        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
+        //        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(getAlarm().colorFade); }, 750)
         .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
         .delay(() => {
@@ -108,4 +108,13 @@ function cancleSound() {
     doSound = true;
 }
 
-exports = module.exports = { ring: ring, cancle: cancle, cancleSound: cancleSound };
+
+
+exports = module.exports = {
+    ring: ring,
+    cancle: cancle,
+    cancleSound: cancleSound,
+    setGetAlarm: function (getAlarmFunc) {
+        getAlarm = getAlarmFunc;
+    }
+};
