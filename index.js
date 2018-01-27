@@ -18,4 +18,4 @@ app.use("/alarm", require('./router/alarmRouter'));
 app.listen(80);
 
 const proc = require("./util/procedure");
-proc.onRing();
+proc.ring();

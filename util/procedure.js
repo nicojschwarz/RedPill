@@ -65,41 +65,24 @@ var d = delay(() => { console.log("1"); }, 500)
     .delay(() => { console.log("3"); }, 600)
     .repeat(() => { console.log("4"); }, 1000, 5);
 
-class Procedure {
-    constructor() {
-        this.interval = null;
-    }
 
-    onRing() {
-        return delay(() => { hw.i2cWrite("on"); }, 0)
-            .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-            .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
-            .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
-            .delay(() => { sound.play(); }, 300000)
-            .delay(() => { hw.i2cWrite("on"); }, 3600000)
-            .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
-            .delay(() => { hw.i2cWrite(alarm.alarm.colorReset); }, 750)
-            .delay(() => { hw.i2cWrite("off"); }, 750);
-        hw.i2cWrite(alarm.alarm.colorFade);
-        this.onRingNext(() => {
-            hw.i2cWrite("on");
-            this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => {
-                console.log("done");
-                hw.i2cWrite(alarm.alarm.colorFade);
-                this.onRingNext(() => {
-                    this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 128571, () => {
-                        this.onRingNext(() => {
-
-                        }, 300000);
-                        this.onRingNext(() => {
-
-                            this.repeatNTime(() => { hw.i2cWrite("down"); }, 7, 750, () => { hw.i2cWrite("off"); });
-                        }, 3600000);
-                    });
-                }, 128571)
-            });
-        }, 0)
-    }
+var ringDelay;
+function ring() {
+    ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
+        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
+        .delay(() => { hw.i2cWrite(alarm.alarm.colorFade); }, 750)
+        .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
+        .delay(() => { sound.play(); }, 300000)
+        .delay(() => { hw.i2cWrite("on"); }, 3600000)
+        .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
+        .delay(() => { hw.i2cWrite(alarm.alarm.colorReset); }, 750)
+        .delay(() => { hw.i2cWrite("off"); }, 750);
 }
 
-exports = module.exports = new Procedure();
+function cancle() {
+    if (ringDelay)
+        ringDelay.cancel();
+}
+
+
+exports = module.exports = { ring: ring, cancle: cancle };
