@@ -1,11 +1,11 @@
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 var hadError = { err: false };
 
 var proc = null;
 
 function play() {
-    proc = exec('omxplayer wakeup.mp3').on('close', (code, signal) => {
+    proc = spawn('omxplayer wakeup.mp3').on('close', (code, signal) => {
         if (code !== 0)
             hadError.err = true;
         console.log(hadError);
