@@ -17,6 +17,7 @@ function save() {
 
 
 schedule.setCallback(() => {
+    console.log("ring");
     if (alarm.active)
         procedure.ring();
 });
