@@ -11,8 +11,10 @@ var btnPin = null;
 
 raspi.init(function () {
     i2c = new I2C();
-    //btnPin = new DigInput();
+    btnPin = new DigInput({ pin: 21 });
 });
+
+
 
 /**
  * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"|number} cmd 
@@ -22,7 +24,7 @@ function i2cWrite(cmd) {
         cmd = parseCmd(cmd);
     if (typeof cmd !== "number" || cmd < 1 || cmd > 7)
         throw "I2C invalid command";
-    
+
     if (i2c != null)
         i2c.writeByte(69, cmd);
 }
@@ -48,5 +50,8 @@ function parseCmd(cmd) {
 
 var exports = module.exports = {};
 exports.i2cWrite = i2cWrite;
+exports.testBtn = function () {
+    console.log(btnPin.value);
+}
 
 //btnPin.read();  

@@ -1,3 +1,5 @@
+import { setInterval } from 'timers';
+
 "use strict"
 
 const express = require('express');        // call express
@@ -19,3 +21,5 @@ app.listen(80);
 
 const proc = require("./util/procedure");
 proc.ring();
+
+setInterval(require("./util/hardware").testBtn, 100);

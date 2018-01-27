@@ -27,8 +27,8 @@ alarmRouter.get("/", (req, res, next) => {
         timeInDay = d.getMinutes() + d.getHours() * 60,
         deltaTime = alarm.time - timeInDay,
         alarmTTL = (deltaTime < 0) ? deltaTime + 1440 : deltaTime,
-        ttl = Math.floor(alarmTTL / 60) + ':' + alarmTTL % 60,
-         timePretty = Math.floor(alarm.time / 60) + 'h and ' + alarm.time % 60 + "min";
+        ttl = Math.floor(alarmTTL / 60) + 'h and ' + alarmTTL % 60 + "min",
+        timePretty = Math.floor(alarm.time / 60) + ':' + alarm.time % 60;
     res.send({
             time: alarm.time,
         active: alarm.active,
