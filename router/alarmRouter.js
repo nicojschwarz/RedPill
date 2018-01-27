@@ -5,7 +5,7 @@ const fs = require("fs");
 const procedure = require("../util/procedure");
 const sound = require("../util/sound");
 
-hw.init();
+hw.init(); 
 
 var alarm;
 try {
