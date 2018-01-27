@@ -10,8 +10,6 @@ try {
     alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' };
 }
 
-
-
 function save() {
     fs.writeFile("alarm.json", JSON.stringify(alarm), "utf8", (err) => { if (err) console.log("alarm save err: " + err); });
 }
@@ -60,6 +58,7 @@ alarmRouter.post("/", (req, res, next) => {
     if (typeof req.body.colorFade === 'string')
         alarm.colorFade = req.body.colorFade;
 
+    save();
     res.send("success");
     console.log(alarm);
 });
