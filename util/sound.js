@@ -8,7 +8,7 @@ function play() {
     console.log("playing");
     if(sound)
         sound.stop();
-    sound = new Sound("wakeup.wav");
+    sound = new Sound("/home/pi/RedPill/wakeup.wav");
     sound.play();
 }
 
