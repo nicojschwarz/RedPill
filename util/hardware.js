@@ -72,8 +72,8 @@ function updateRelay() {
 exports = module.exports = function () {
     raspi.init(function () {
         i2c = new I2C();
-        snoozeBtnPin = new DigitalInput({ pin: 'GPIO21', pullResistor: require("raspi-gpio").PULL_DOWN });
-        relayBtnPin = new DigitalInput({ pin: 'GPIO20', pullResistor: require("raspi-gpio").PULL_DOWN });
+        snoozeBtnPin = new DigitalInput('GPIO21');
+        relayBtnPin = new DigitalInput('GPIO20');
         relayPin = new DigitalOutput('GPIO26');
     });
 
