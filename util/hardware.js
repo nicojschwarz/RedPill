@@ -1,12 +1,7 @@
-import { DigitalOutput } from './C:/Users/HP/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/raspi-gpio';
-import { relative } from 'path';
-
-"use strict"
-
-const { setInterval } = require('timers');
 const raspi = require('raspi');
-const I2C = require('raspi-i2c').I2C;
+const { I2C } = require('raspi-i2c');
 const { DigitalInput, DigitalOutput } = require('raspi-gpio');
+const { setInterval } = require('timers');
 
 /** @type {I2C} */
 var i2c = null;
@@ -17,14 +12,8 @@ var relayBtnPin = null;
 /** @type {DigitalOutput} */
 var relayPin = null;
 
-raspi.init(function () {
-    i2c = new I2C();
-    snoozeBtnPin = new DigitalInput({ pin: 'GPIO21', pullResistor: require("raspi-gpio").PULL_DOWN });
-    relayBtnPin = new DigitalInput({ pin: 'GPIO20', pullResistor: require("raspi-gpio").PULL_DOWN });
-    relayPin = new DigitalOutput('GPIO26');
-});
-
-
+var lastSnoVal = 2;
+var relayBtnVal = 0;
 
 /**
  * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"|number} cmd 
@@ -37,55 +26,62 @@ function i2cWrite(cmd) {
 
     if (i2c != null)
         i2c.writeByte(69, cmd);
+
+    /**
+     * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"} cmd 
+     */
+    function parseCmd(cmd) {
+        var result = {
+            off: 1,
+            on: 2,
+            up: 3,
+            down: 4,
+            blue: 5,
+            green: 6,
+            red: 7
+        }[cmd];
+        if (!result)
+            throw "Invalid i2c command";
+        return result;
+    }
 }
 
-/**
- * @param {"off"|"on"|"up"|"down"|"blue"|"green"|"red"} cmd 
- */
-function parseCmd(cmd) {
-    var result = {
-        off: 1,
-        on: 2,
-        up: 3,
-        down: 4,
-        blue: 5,
-        green: 6,
-        red: 7
-    }[cmd];
-    if (!result)
-        throw "Invalid i2c command";
-    return result;
+
+function handleBtns() {
+    var snoVal = snoozeBtnPin.value;
+    if (snoVal === 1) {
+        lastSnoVal = snoVal;
+        if (snoVal === 1) {
+            console.log("snooze button pressed");
+            procedure.cancleSound();
+            sound.stop();
+        }
+    }
+    if (relayBtnVal !== relayBtnPin.value) {
+        console.log("snooze button toggled");
+        relayBtnVal = relayBtnPin.value;
+        updateRelay();
+    }
 }
 
-var relayBtnVal = 0;
-var playingSound = 0;
-updateRelay = function (val = null) {
-    if (val !== null)
-        playingSound = val;
-    relayPin.write(relayBtnVal === 1 || playingSound === 1);
-};
+function updateRelay() {
+    if (relayPin != null)
+        relayPin.write(relayBtnVal === 1 || sound.isPlaying);
+}
 
-var btnCB = null;
+exports = module.exports = function () {
+    raspi.init(function () {
+        i2c = new I2C();
+        snoozeBtnPin = new DigitalInput({ pin: 'GPIO21', pullResistor: require("raspi-gpio").PULL_DOWN });
+        relayBtnPin = new DigitalInput({ pin: 'GPIO20', pullResistor: require("raspi-gpio").PULL_DOWN });
+        relayPin = new DigitalOutput('GPIO26');
+    });
 
-var exports = module.exports = {};
-exports.i2cWrite = i2cWrite;
-exports.setPlayingSound = function (val) {
-    playingSound = val;
-};
-exports.setBtnCallback = function (cb) {
-    btnCB = cb;
-};
-exports.init = function () {
-    var lastSnoVal = 2;
-    setInterval(function () {
-        if (lastSnoVal === 0 && snoozeBtnPin.value === 1) {
-            btnCB();
-        }
-        lastSnoVal = snoozeBtnPin.value;
-        if (relayBtnVal !== relayBtnPin.value) {
-            relayBtnVal = relayBtnPin.value;
-            updateRelay();
-        }
-    }, 200);
-};
-exports.updateRelay = updateRelay;
+    setInterval(handleBtns, 200);
+
+    return {
+        i2cWrite: i2cWrite,
+        init: init,
+        updateRelay: updateRelay,
+    };
+}

@@ -5,33 +5,41 @@ const Sound = require('node-aplay');
 var sound = null;
 
 var soundPlayingTimeout = null;
+/** @type {boolean} */
+var isPlaying = true;
+function setPlaying(val) { isPlaying = val; hw.updateRelay(); }
 
 function play() {
-    console.log("playing");
+    console.log("playing sound");
+
     if (sound)
         sound.stop();
+
     sound = new Sound("/home/pi/RedPill/wakeup.wav");
     sound.play();
     sound.on("complete", () => {
-        hw.updateRelay(0);
+        setPlaying(false);
     });
 
-    hw.updateRelay(1);
+    setPlaying(false);
 
-    if (soundPlayingTimeout)
-        clearTimeout(soundPlayingTimeout);
+    if (soundPlayingTimeout) clearTimeout(soundPlayingTimeout);
     soundPlayingTimeout = setTimeout(() => {
-        hw.updateRelay(0);
+        setPlaying(false);
         soundPlayingTimeout = null;
     }, 1000 * 60 * 15);
 }
 
-exports = module.exports = {};
-exports.play = play;
-exports.stop = function () {
-    hw.updateRelay(0);
+function stop() {
+    setPlaying(false);
     if (sound) {
         sound.stop();
         sound = null;
     }
 }
+
+exports = module.exports = {
+    play: play,
+    stop: stop,
+    get isPlaying() { return isPlaying; }
+};

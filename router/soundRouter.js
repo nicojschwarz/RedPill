@@ -4,6 +4,7 @@ const fs = require("fs");
 const soundRouter = express.Router();
 
 soundRouter.post("/", (req, res, next) => {
+    // jank but works with MIT app inventor
     fs.writeFileSync("/home/pi/RedPill/wakeup.wav", "");
     req.on('data', function (chunk) {
         var res = fs.appendFileSync("/home/pi/RedPill/wakeup.wav", chunk)
@@ -18,6 +19,10 @@ soundRouter.post("/", (req, res, next) => {
 
 soundRouter.get("/play", (req, res, next) => {
     sound.play();
+    res.send('success');
+});
+soundRouter.get("/abort", (req, res, next) => {
+    sound.stop();
     res.send('success');
 });
 
