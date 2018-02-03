@@ -1,6 +1,6 @@
-const schedule = require('node-schedule');
+const nschedule = require('node-schedule');
 
-var job = schedule.scheduleJob("0 6 * * *", function () {
+var job = nschedule.scheduleJob("0 6 * * *", function () {
     console.log("running callback")
     if (callback) callback();
 });

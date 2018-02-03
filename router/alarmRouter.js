@@ -1,11 +1,5 @@
-const hw = require('../util/hardware');
-const schedule = require('../util/schedule');
 const express = require('express');
 const fs = require("fs");
-const procedure = require("../util/procedure");
-const sound = require("../util/sound");
-
-hw.init();
 
 var alarm;
 try {

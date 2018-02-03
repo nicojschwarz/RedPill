@@ -1,7 +1,3 @@
-var { setInterval } = require("timers");
-var sound = require("./sound");
-var hw = require("./hardware");
-
 var getAlarm;
 
 /* - OnRing:
@@ -19,13 +15,13 @@ function delay(fn, t) {
         self,
         timer;
 
-    function schedule(fn, t) {
+    function scheduleFun(fn, t) {
         timer = setTimeout(function () {
             timer = null;
             fn();
             if (queue.length) {
                 var item = queue.shift();
-                schedule(item.fn, item.t);
+                scheduleFun(item.fn, item.t);
             }
         }, t);
     }
@@ -37,14 +33,14 @@ function delay(fn, t) {
                 queue.push({ fn: fn, t: t });
             } else {
                 // no queue or timer yet, so schedule the timer
-                schedule(fn, t);
+                scheduleFun(fn, t);
             }
             return self;
         },
         repeat: function (fn, t, n) {
             if (!queue.length && !timer) {
                 n--;
-                schedule(fn, t);
+                scheduleFun(fn, t);
             }
             for (let i = 0; i < n; i++) {
                 queue.push({ fn: fn, t: t });

@@ -1,10 +1,7 @@
 const express = require('express');
 const fs = require("fs");
-const sound = require('../util/sound');
 
 const soundRouter = express.Router();
-
-
 
 soundRouter.post("/", (req, res, next) => {
     fs.writeFileSync("/home/pi/RedPill/wakeup.wav", "");

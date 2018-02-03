@@ -1,5 +1,4 @@
-const express = require('express'); 
-const hw = require('../util/hardware');
+const express = require('express');
 
 const ledRouter = express.Router();
 ledRouter.get("/:cmd", (req, res, next) => {
