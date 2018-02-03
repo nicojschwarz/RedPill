@@ -49,7 +49,7 @@ function i2cWrite(cmd) {
 
 function handleBtns() {
     var snoVal = snoozeBtnPin.value;
-    if (snoVal === 1) {
+    if (snoVal !== lastSnoVal) {
         lastSnoVal = snoVal;
         if (snoVal === 1) {
             console.log("snooze button pressed");
