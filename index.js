@@ -10,6 +10,8 @@ global.procedure = require('./util/procedure');
 global.schedule = require('./util/schedule');
 global.save = require('./util/save');
 
+save.load();
+
 const app = express();                 // define our app using express
 
 app.use("/sound", require('./router/soundRouter'));

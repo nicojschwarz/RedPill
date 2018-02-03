@@ -21,7 +21,7 @@ function play() {
         setPlaying(false);
     });
 
-    setPlaying(false);
+    setPlaying(true);
 
     if (soundPlayingTimeout) clearTimeout(soundPlayingTimeout);
     soundPlayingTimeout = setTimeout(() => {

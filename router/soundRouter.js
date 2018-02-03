@@ -18,6 +18,7 @@ soundRouter.post("/", (req, res, next) => {
 });
 
 soundRouter.get("/play", (req, res, next) => {
+    console.log("trying to play");
     sound.play();
     res.send('success');
 });
