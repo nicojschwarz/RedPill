@@ -20,9 +20,11 @@ alarmRouter.get("/", (req, res, next) => {
 });
 alarmRouter.post("/", (req, res, next) => {
     if (typeof req.body.time === 'string') {
-        const t = parseInt(req.body.time);
-        if (t >= 0 && t < 1440)
-            save.alarm.time = t;
+        var t = parseInt(req.body.time);
+        if (t >= 0 && t < 1440) {
+            t -= 20;
+            if (t<0) t += 1440;
+            save.alarm.time = t; }
         schedule.setTime(save.alarm.time);
         console.log(save.alarm.time);
     }
