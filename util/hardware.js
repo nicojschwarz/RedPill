@@ -89,7 +89,7 @@ function sendRolloCommand(action) {
             rolloPinB.write(1);
             setTimeout(() => rolloPinB.write(0), 500);
         }
-    } else if (action === "stop") {
+    } else if (action === "down") {
         if (rolloPinC !== null) {
             rolloPinC.write(1);
             setTimeout(() => rolloPinC.write(0), 500);
