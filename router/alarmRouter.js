@@ -46,4 +46,17 @@ alarmRouter.get("/abort", (req, res, next) => {
     res.send("success");
 });
 
+alarmRouter.get("/rollo/up", (req, res, next) => {
+    rollo.open();
+    res.send("success");
+});
+alarmRouter.get("/rollo/down", (req, res, next) => {
+    rollo.close();
+    res.send("success");
+});
+alarmRouter.get("/rollo/half/:time", (req, res, next) => {
+    rollo.openHalf(req.params.time);
+    res.send("success");
+});
+
 exports = module.exports = alarmRouter;
