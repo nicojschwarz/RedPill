@@ -1,14 +1,14 @@
 module.exports = {
     open: function () {
-        hardware.sendRolloCommand("up");
+        hw.sendRolloCommand("up");
     },
     close: function () {
-        hardware.sendRolloCommand("down");
+        hw.sendRolloCommand("down");
     },
     openHalf: function (time) {
         if (typeof(time) !== "number" || time < 600)
             return;
-        hardware.sendRolloCommand("down");
+        hw.sendRolloCommand("down");
         setTimeout(() => hardware.sendRolloCommand("up"), 10000);
         setTimeout(() => hardware.sendRolloCommand("stop"), 10000 + time);
     }
