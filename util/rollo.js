@@ -9,7 +9,7 @@ module.exports = {
         if (typeof(time) !== "number" || time < 600)
             return;
         hw.sendRolloCommand("down");
-        setTimeout(() => hw.sendRolloCommand("up"), 10000);
-        setTimeout(() => hw.sendRolloCommand("stop"), 10000 + time);
+        setTimeout(() => hw.sendRolloCommand("up"), 20000);
+        setTimeout(() => hw.sendRolloCommand("stop"), 20000 + time);
     }
 }
