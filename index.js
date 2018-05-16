@@ -9,6 +9,7 @@ global.sound = require('./util/sound');
 global.procedure = require('./util/procedure');
 global.schedule = require('./util/schedule');
 global.save = require('./util/save');
+global.rollo = require('./util/rollo');
 
 const app = express();                 // define our app using express
 

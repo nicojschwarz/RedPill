@@ -68,6 +68,7 @@ function ring() {
         .delay(() => { //(750*8+128571*7+300000)/(1000*60) = ca 20.1min until startup of sound
             if (doSound)
                 sound.play();
+            rollo.open();
         }, 300000)
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
@@ -76,7 +77,7 @@ function ring() {
 }
 
 function cancle() {
-    if (rinDelay)
+    if (ringDelay)
         ringDelay.cancel();
     ringDelay = null;
 }
