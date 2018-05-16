@@ -72,7 +72,7 @@ function handleBtns() {
 
 function updateRelay() {
     if (relayPin != null)
-        relayPin.write(relayBtnVal === 1 || sound.isPlaying);
+        relayPin.write((relayBtnVal === 1 || sound.isPlaying)?1:0);
 }
 
 /**
@@ -112,7 +112,6 @@ exports = module.exports = function () {
 
     return {
         i2cWrite: i2cWrite,
-        init: init,
         updateRelay: updateRelay,
         sendRolloCommand: sendRolloCommand
     };
