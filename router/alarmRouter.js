@@ -55,8 +55,8 @@ alarmRouter.get("/rollo/down", (req, res, next) => {
     res.send("success");
 });
 alarmRouter.get("/rollo/half/:time", (req, res, next) => {
-    rollo.openHalf(req.params.time);
-    res.send("success");
+    rollo.openHalf(Number(req.params.time));
+    res.send("success+"+req.params.time);
 });
 
 exports = module.exports = alarmRouter;
