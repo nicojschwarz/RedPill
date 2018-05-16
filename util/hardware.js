@@ -11,6 +11,12 @@ var snoozeBtnPin = null;
 var relayBtnPin = null;
 /** @type {DigitalOutput} */
 var relayPin = null;
+/** @type {DigitalOutput} */
+var rolloPinA = null;
+/** @type {DigitalOutput} */
+var rolloPinB = null;
+/** @type {DigitalOutput} */
+var rolloPinC = null;
 
 var lastSnoVal = 2;
 var relayBtnVal = 0;
@@ -69,12 +75,37 @@ function updateRelay() {
         relayPin.write(relayBtnVal === 1 || sound.isPlaying);
 }
 
+/**
+ * @param {"up"|"down"|"stop"} action 
+ */
+function sendRolloCommand(action) {
+    if (action === "up") {
+        if (rolloPinA !== null) {
+            rolloPinA.write(1);
+            setTimeout(() => rolloPinA.write(0), 500);
+        }
+    } else if (action === "stop") {
+        if (rolloPinB !== null) {
+            rolloPinB.write(1);
+            setTimeout(() => rolloPinB.write(0), 500);
+        }
+    } else if (action === "stop") {
+        if (rolloPinC !== null) {
+            rolloPinC.write(1);
+            setTimeout(() => rolloPinC.write(0), 500);
+        }
+    }
+}
+
 exports = module.exports = function () {
     raspi.init(function () {
         i2c = new I2C();
         snoozeBtnPin = new DigitalInput('GPIO21');
         relayBtnPin = new DigitalInput('GPIO20');
         relayPin = new DigitalOutput('GPIO26');
+        rolloPinA = new DigitalOutput("GPIO6");
+        rolloPinB = new DigitalOutput("GPIO13");
+        rolloPinC = new DigitalOutput("GPIO19");
     });
 
     setInterval(handleBtns, 200);
@@ -83,5 +114,6 @@ exports = module.exports = function () {
         i2cWrite: i2cWrite,
         init: init,
         updateRelay: updateRelay,
+        sendRolloCommand: sendRolloCommand
     };
 }
