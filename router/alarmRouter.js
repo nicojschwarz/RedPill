@@ -14,6 +14,7 @@ alarmRouter.get("/", (req, res, next) => {
         active: save.alarm.active,
         colorFade: save.alarm.colorFade,
         colorReset: save.alarm.colorReset,
+        rolloHalf: save.alarm.rolloHalf,
         timePretty: timePretty,
         ttl: ttl
     });
@@ -23,8 +24,9 @@ alarmRouter.post("/", (req, res, next) => {
         var t = parseInt(req.body.time);
         if (t >= 0 && t < 1440) {
             t -= 20;
-            if (t<0) t += 1440;
-            save.alarm.time = t; }
+            if (t < 0) t += 1440;
+            save.alarm.time = t;
+        }
         schedule.setTime(save.alarm.time);
         console.log(save.alarm.time);
     }
@@ -34,6 +36,8 @@ alarmRouter.post("/", (req, res, next) => {
         save.alarm.colorReset = req.body.colorReset;
     if (typeof req.body.colorFade === 'string')
         save.alarm.colorFade = req.body.colorFade;
+    if (typeof req.body.rolloHalf === 'string')
+        save.alarm.rolloHalf = req.body.rolloHalf;
 
     save.save();
     res.send("success");
@@ -56,7 +60,7 @@ alarmRouter.get("/rollo/down", (req, res, next) => {
 });
 alarmRouter.get("/rollo/half/:time", (req, res, next) => {
     rollo.openHalf(Number(req.params.time));
-    res.send("success+"+req.params.time);
+    res.send("success+" + req.params.time);
 });
 
 exports = module.exports = alarmRouter;
