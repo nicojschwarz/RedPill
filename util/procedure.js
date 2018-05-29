@@ -73,7 +73,8 @@ function ring() {
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(save.alarm.colorReset); }, 750)
-        .delay(() => { hw.i2cWrite("off"); }, 750);
+        .delay(() => { hw.i2cWrite("off"); }, 750)
+        .delay(() => { rollo.openHalf(save.alarm.rolloHalf) }, 100);
 }
 
 function cancle() {

@@ -7,7 +7,7 @@ function load() {
         alarm = require("../alarm.json")
     } catch (err) {
         if (!alarm)
-            alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue' };
+            alarm = { time: 900, active: false, colorFade: 'red', colorReset: 'blue', rolloHalf: 6000 };
     }
 }
 
