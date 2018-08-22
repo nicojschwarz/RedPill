@@ -23,7 +23,7 @@ alarmRouter.post("/", (req, res, next) => {
     if (typeof req.body.time === 'string') {
         var t = parseInt(req.body.time);
         if (t >= 0 && t < 1440) {
-            t -= 20;
+            t -= 0;
             if (t < 0) t += 1440;
             save.alarm.time = t;
         }
