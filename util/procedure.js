@@ -64,12 +64,12 @@ function ring() {
     ringDelay = delay(() => { hw.i2cWrite("on"); }, 0)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(save.alarm.colorFade); }, 750)
-        .repeat(() => { hw.i2cWrite("up"); }, 128571, 7)
-        .delay(() => { //(750*8+128571*7+300000)/(1000*60) = ca 20.1min until startup of sound
+        .repeat(() => { hw.i2cWrite("up"); }, 750, 7)
+        .delay(() => { //(750*8+750*7+1000)/(1000) = ca 12sec until startup of sound
             if (doSound)
                 sound.play();
             rollo.open();
-        }, 300000)
+        }, 1000)
         .delay(() => { hw.i2cWrite("on"); }, 3600000)
         .repeat(() => { hw.i2cWrite("down"); }, 750, 7)
         .delay(() => { hw.i2cWrite(save.alarm.colorReset); }, 750)
